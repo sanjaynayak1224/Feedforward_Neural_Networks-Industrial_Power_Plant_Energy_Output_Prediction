@@ -55,14 +55,20 @@ I built a Feedforward Artificial Neural Network (ANN) using PyTorch's `nn.Sequen
 
 ```mermaid
 graph LR
-    subgraph Input [Input Layer]
-        I1((AT))
-        I2((V))
-        I3((AP))
-        I4((RH))
+    %% Input Feature Labels (Dashed links)
+    L1["Ambient Temperature (°C)"] -.-> AT
+    L2["Exhaust Vacuum (cm Hg)"] -.-> V
+    L3["Ambient Pressure (mbar)"] -.-> AP
+    L4["Relative Humidity (%)"] -.-> RH
+
+    subgraph Input [Input Layer: 4 Features]
+        AT((AT))
+        V((V))
+        AP((AP))
+        RH((RH))
     end
 
-    subgraph Hidden 1 [Hidden Layer 1]
+    subgraph Hidden1 [Hidden Layer 1: 6 Neurons]
         H1_1(( ))
         H1_2(( ))
         H1_3(( ))
@@ -71,7 +77,7 @@ graph LR
         H1_6(( ))
     end
 
-    subgraph Hidden 2 [Hidden Layer 2]
+    subgraph Hidden2 [Hidden Layer 2: 6 Neurons]
         H2_1(( ))
         H2_2(( ))
         H2_3(( ))
@@ -80,27 +86,67 @@ graph LR
         H2_6(( ))
     end
 
-    subgraph Output [Output Layer]
-        O1((PE))
+    subgraph Output [Output Layer: 1 Neuron]
+        PE((PE))
     end
 
-    %% Connections
-    I1 & I2 & I3 & I4 --- H1_1 & H1_2 & H1_3 & H1_4 & H1_5 & H1_6
-    H1_1 & H1_2 & H1_3 & H1_4 & H1_5 & H1_6 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
-    H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6 --- O1
+    %% Target Label (Dashed link)
+    PE -.-> L5["Predicted Energy Output (PE)<br>(Megawatts - MW)"]
 
-    %% Styling
+    %% fully connected layers
+    AT --- H1_1 & H1_2 & H1_3 & H1_4 & H1_5 & H1_6
+    V --- H1_1 & H1_2 & H1_3 & H1_4 & H1_5 & H1_6
+    AP --- H1_1 & H1_2 & H1_3 & H1_4 & H1_5 & H1_6
+    RH --- H1_1 & H1_2 & H1_3 & H1_4 & H1_5 & H1_6
+
+    H1_1 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
+    H1_2 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
+    H1_3 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
+    H1_4 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
+    H1_5 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
+    H1_6 --- H2_1 & H2_2 & H2_3 & H2_4 & H2_5 & H2_6
+
+    H2_1 --- PE
+    H2_2 --- PE
+    H2_3 --- PE
+    H2_4 --- PE
+    H2_5 --- PE
+    H2_6 --- PE
+
+    %% Styles for nodes
     classDef inputStyle fill:#e1f5fe,stroke:#03a9f4,stroke-width:2px;
-    classDef hiddenStyle fill:#efebe9,stroke:#b0bec5,stroke-width:1px;
-    classDef outputStyle fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
+    classDef hidden1Style fill:#f3e5f5,stroke:#8e24aa,stroke-width:1px;
+    classDef hidden2Style fill:#e8f5e9,stroke:#43a047,stroke-width:1px;
+    classDef outputStyle fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
 
-    class I1,I2,I3,I4 inputStyle;
-    class H1_1,H1_2,H1_3,H1_4,H1_5,H1_6 hiddenStyle;
-    class H2_1,H2_2,H2_3,H2_4,H2_5,H2_6 hiddenStyle;
-    class O1 outputStyle;
+    class AT,V,AP,RH inputStyle;
+    class H1_1,H1_2,H1_3,H1_4,H1_5,H1_6 hidden1Style;
+    class H2_1,H2_2,H2_3,H2_4,H2_5,H2_6 hidden2Style;
+    class PE outputStyle;
 
-    linkStyle default stroke:#cfd8dc,stroke-width:1px;
+    %% Styling transparent text labels
+    style L1 fill:none,stroke:none;
+    style L2 fill:none,stroke:none;
+    style L3 fill:none,stroke:none;
+    style L4 fill:none,stroke:none;
+    style L5 fill:none,stroke:none;
+
+    %% Link styles (Dashed connections)
+    linkStyle 0 stroke:#03a9f4,stroke-width:1.5px,stroke-dasharray: 4 4;
+    linkStyle 1 stroke:#03a9f4,stroke-width:1.5px,stroke-dasharray: 4 4;
+    linkStyle 2 stroke:#03a9f4,stroke-width:1.5px,stroke-dasharray: 4 4;
+    linkStyle 3 stroke:#03a9f4,stroke-width:1.5px,stroke-dasharray: 4 4;
+    linkStyle 4 stroke:#fb8c00,stroke-width:1.5px,stroke-dasharray: 4 4;
+
+    %% Link styles (Fully-connected layer color schemes)
+    linkStyle 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 stroke:#03a9f4,stroke-width:1px,opacity:0.6;
+    linkStyle 29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64 stroke:#8e24aa,stroke-width:1px,opacity:0.6;
+    linkStyle 65,66,67,68,69,70 stroke:#43a047,stroke-width:1px,opacity:0.6;
 ```
+
+| ⚙️ Architecture Details | 🎛️ Hyperparameters & Training | 🎯 Project Objective |
+| :--- | :--- | :--- |
+| • Fully Connected (Dense) Layers<br>• ReLU Activation in Hidden Layers | • Linear Activation in Output Layer<br>• Loss Function: Mean Squared Error (MSE)<br>• Optimizer: Adam | Predict Net Hourly Electrical Energy Output (Megawatts (MW)) under varying environmental conditions. |
 
 
 I compiled the model using PyTorch's `MSELoss` (Mean Squared Error) to measure performance and the `Adam` optimizer to adjust network weights during backpropagation.
