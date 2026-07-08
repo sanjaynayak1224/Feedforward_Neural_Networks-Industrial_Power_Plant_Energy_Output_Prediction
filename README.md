@@ -113,7 +113,7 @@ If you want to pull this down and run the code on your local machine, here is th
 ### 1. Clone and Navigate
 ```bash
 git clone <repository-url>
-cd Feedforward_Neural_Networks-Industrial_Power_Plant_Energy_Ouput_Prediction
+cd Feedforward_Neural_Networks-Industrial_Power_Plant_Energy_Output_Prediction
 ```
 
 ### 2. Spin Up a Virtual Environment
