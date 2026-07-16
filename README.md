@@ -36,7 +36,9 @@ The dataset contains four input features and one target output:
 
 The project follows a structured workflow to clean, preprocess, batch, train, and validate the neural network. Here is the general structure:
 
-![The Pipeline & Modeling Workflow](end_end_pipeline.png)
+<p align="center">
+  <img src="end_end_pipeline.png" alt="The Pipeline & Modeling Workflow" width="480">
+</p>
 
 ### Behind the Scenes: How the Pipeline is Built
 
@@ -45,7 +47,9 @@ To get the raw environmental readings ready for PyTorch, I built a structured pr
 * **Cleaning up the dataset**: First, I loaded the powerplant dataset and verified if there were any missing values. Fortunately, the dataset was completely clean with zero null values across all 9,568 rows, so I didn't need to do any imputation.
 * **Understanding the environmental features**: The dataset contains four environmental input features and one target output:
 
-  ![Feature Correlation Heatmap](feature_correlation_heatmap.png)
+  <p align="center">
+    <img src="feature_correlation_heatmap.png" alt="Feature Correlation Heatmap" width="650">
+  </p>
   * **`AT` (Ambient Temperature in °C)**: Ranges from 1.81°C to 37.11°C. It is heavily correlated with energy output. As ambient temperature rises, the density of the inlet air decreases, which reduces the mass flow rate of air to the gas turbine and consequently decreases its power output.
   * **`V` (Exhaust Vacuum in cm Hg)**: Ranges from 25.36 to 81.56 cm Hg. This represents the steam turbine backpressure. A higher vacuum (corresponding to lower absolute backpressure) allows the steam turbine to expand steam to lower pressures, extracting more mechanical energy and increasing plant efficiency.
   * **`AP` (Ambient Pressure in millibars/mbar)**: Ranges from 992.89 to 1033.30 mbar. Ambient pressure directly influences the air density at the gas turbine compressor inlet. Higher pressure increases air density, leading to a higher air mass flow rate and increased electrical output.
@@ -65,14 +69,18 @@ I built a Feedforward Artificial Neural Network (ANN) using PyTorch's `nn.Sequen
 * **Second Hidden Layer**: 6 nodes with a `ReLU` activation.
 * **Output Layer**: 1 node (fully connected linear layer) to output the predicted energy output (`PE`).
 
-![Feedforward Neural Network Architecture](fnn_architecture.png)
+<p align="center">
+  <img src="fnn_architecture.png" alt="Feedforward Neural Network Architecture" width="800">
+</p>
 
 I compiled the model using PyTorch's `MSELoss` (Mean Squared Error) to measure performance and the `Adam` optimizer to adjust network weights during backpropagation.
 
 ### Training & Checkpointing
 I ran the training loop for **100 epochs**. At the end of each epoch, I ran the model on the test dataset to calculate validation loss. To avoid saving a model that might overfit, I set up a checkpointing check: the script only saved the model weights to `best_model.pt` when the validation loss reached a new historical low. After training, I loaded these optimal weights back into the model for final evaluation.
 
-![Loss Comparison Curve](loss_comparison.png)
+<p align="center">
+  <img src="loss_comparison.png" alt="Loss Comparison Curve" width="800">
+</p>
 
 ---
 
@@ -80,9 +88,13 @@ I ran the training loop for **100 epochs**. At the end of each epoch, I ran the 
 
 Here are the performance metrics I recorded for the best model:
 
-![Model Performance Summary](model_performance_summary.png)
+<p align="center">
+  <img src="model_performance_summary.png" alt="Model Performance Summary" width="800">
+</p>
 
-![Actual vs Predicted PE Scatter Plot](actual_vs_predicted.png)
+<p align="center">
+  <img src="actual_vs_predicted.png" alt="Actual vs Predicted PE Scatter Plot" width="750">
+</p>
 
 ### 💡 What the numbers tell us
 * **Strong predictive power ($R^2$ of 93.55%)**: Our model explains over 93.5% of the variance in electrical energy output, showing that the four environmental features have a very strong relationship with plant performance.
