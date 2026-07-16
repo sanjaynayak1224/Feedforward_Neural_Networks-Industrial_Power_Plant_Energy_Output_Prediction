@@ -67,8 +67,6 @@ I built a Feedforward Artificial Neural Network (ANN) using PyTorch's `nn.Sequen
 
 ![Feedforward Neural Network Architecture](fnn_architecture.png)
 
-
-
 I compiled the model using PyTorch's `MSELoss` (Mean Squared Error) to measure performance and the `Adam` optimizer to adjust network weights during backpropagation.
 
 ### Training & Checkpointing
@@ -81,13 +79,6 @@ I ran the training loop for **100 epochs**. At the end of each epoch, I ran the 
 ## 📊 Model Evaluation & Results
 
 Here are the performance metrics I recorded for the best model:
-
-| Metric | Training Set | Testing Set (Unseen) |
-| :--- | :---: | :---: |
-| **Mean Squared Error (MSE)** | 19.9381 | 18.4425 |
-| **Root Mean Squared Error (RMSE)** | 4.4652 MW | **4.2945 MW** |
-| **Mean Absolute Error (MAE)** | 3.5128 MW | **3.4046 MW** |
-| **$R^2$ Score (Coefficient of Determination)** | 93.18% | **93.55%** |
 
 ![Model Performance Summary](model_performance_summary.png)
 
