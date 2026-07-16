@@ -36,19 +36,7 @@ The dataset contains four input features and one target output:
 
 The project follows a structured workflow to clean, preprocess, batch, train, and validate the neural network. Here is the general structure:
 
-```mermaid
-graph TD
-    A[Raw Power Plant Data] --> B[Data Quality & Imputation Check]
-    B --> C[Feature-Target Separation]
-    C --> D[80/20 Train-Test Split]
-    D --> E[Feature Scaling via StandardScaler]
-    E --> F[PyTorch Tensor Conversion]
-    F --> G[TensorDataset & DataLoader Batches]
-    G --> H[FNN Architecture Design]
-    H --> I[Model Training with MSE Loss & Adam]
-    I --> J[Validation & Best Model Saving]
-    J --> K[Evaluation on Test Dataset]
-```
+![The Pipeline & Modeling Workflow](end_end_pipeline.png)
 
 ### Behind the Scenes: How the Pipeline is Built
 
@@ -56,6 +44,8 @@ To get the raw environmental readings ready for PyTorch, I built a structured pr
 
 * **Cleaning up the dataset**: First, I loaded the powerplant dataset and verified if there were any missing values. Fortunately, the dataset was completely clean with zero null values across all 9,568 rows, so I didn't need to do any imputation.
 * **Understanding the environmental features**: The dataset contains four environmental input features and one target output:
+
+  ![Feature Correlation Heatmap](feature_correlation_heatmap.png)
   * **`AT` (Ambient Temperature in °C)**: Ranges from 1.81°C to 37.11°C. It is heavily correlated with energy output. As ambient temperature rises, the density of the inlet air decreases, which reduces the mass flow rate of air to the gas turbine and consequently decreases its power output.
   * **`V` (Exhaust Vacuum in cm Hg)**: Ranges from 25.36 to 81.56 cm Hg. This represents the steam turbine backpressure. A higher vacuum (corresponding to lower absolute backpressure) allows the steam turbine to expand steam to lower pressures, extracting more mechanical energy and increasing plant efficiency.
   * **`AP` (Ambient Pressure in millibars/mbar)**: Ranges from 992.89 to 1033.30 mbar. Ambient pressure directly influences the air density at the gas turbine compressor inlet. Higher pressure increases air density, leading to a higher air mass flow rate and increased electrical output.
@@ -98,6 +88,8 @@ Here are the performance metrics I recorded for the best model:
 | **Root Mean Squared Error (RMSE)** | 4.4652 MW | **4.2945 MW** |
 | **Mean Absolute Error (MAE)** | 3.5128 MW | **3.4046 MW** |
 | **$R^2$ Score (Coefficient of Determination)** | 93.18% | **93.55%** |
+
+![Model Performance Summary](model_performance_summary.png)
 
 ![Actual vs Predicted PE Scatter Plot](actual_vs_predicted.png)
 
