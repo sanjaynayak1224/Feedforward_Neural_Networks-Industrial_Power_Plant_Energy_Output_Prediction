@@ -144,7 +144,7 @@ git clone https://github.com/sanjaynayak1224/Feedforward_Neural_Networks-Industr
 cd Feedforward_Neural_Networks-Industrial_Power_Plant_Energy_Output_Prediction
 ```
 
-### 2. Spin Up a Virtual Environment
+### 2. Spin Up a Virtual Environment 
 
 - **On Windows (PowerShell):**
   ```powershell
